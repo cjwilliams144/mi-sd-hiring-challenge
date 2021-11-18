@@ -31,7 +31,6 @@ async function fetchLocation(){
     */
     try{
         const loactionResponse = await axios.get(`${BASELOACTIONURL}?zip_code=84606`)
-        console.log(loactionResponse.data)
         fetchForcast(loactionResponse.data)
     }
     catch(err){
@@ -46,7 +45,6 @@ async function fetchForcast(locationData){
     try{
         const date = new Date()
         const forcastResponse = await axios.get(`${BASEFORCASTURL}?latitude=${locationData.latitude}&longitude=${locationData.longitude}&date=${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`)
-        console.log(forcastResponse.data)
         bodyLoaded(locationData, forcastResponse.data)
     }   
     catch(err){
@@ -110,26 +108,52 @@ function bodyLoaded(locationData, forcastData){
 
 
     //Fill in the next 3 days of forcast info
-    for(let i = 0; i < 3; i++){
-        let forcastNum = `forcast${i+1}`
-        
-        //Add Day
-        document.getElementById(`${forcastNum}Header`).innerText = getDayOfWeek(forcastData.daily.data[i].time)
-        
-        //Add image
+    for(let i = 0; i < forcastData.daily.data.length; i++){
+
+        //Create components
+        let forcastDiv = document.createElement('div')
+        let forcastHeader = document.createElement('h2')
+        let forcastIconContainer = document.createElement('div')
+        let forcastIcon = document.createElement('div')
+        let forcastInfoContainer = document.createElement('div')
+        let forcastForcast = document.createElement('p')
+        let forcastTempContainer = document.createElement('div')
+        let forcastTemp = document.createElement('p')
         let img = document.createElement("img")
-        img.id = `${forcastNum}Image`
+
+        //Apply classes for styling
+        forcastDiv.className = 'forcastItem'
+        forcastIconContainer.className = 'forcastIconContainer'
+        forcastIcon.className = 'forcastIcon'
+        
+        //update components with correct content
+        forcastHeader.innerText = getDayOfWeek(forcastData.daily.data[i].time)
+        
         img.src = getImage(forcastData.daily.data[i].icon)
         img.alt = forcastData.daily.data[i].icon
 
-        var iconDiv = document.getElementById(`${forcastNum}Icon`)
-        iconDiv.appendChild(img);
+        forcastIcon.appendChild(img)
 
-        //Add summary
-        document.getElementById(`${forcastNum}Forcast`).innerText = forcastData.daily.data[i].summary
+        forcastForcast.innerText = forcastData.daily.data[i].summary
 
-        //Add High and Low
-        document.getElementById(`${forcastNum}TempHigh`).innerText = `${Math.round(forcastData.daily.data[i].temperatureHigh)}\xB0 F `
-        document.getElementById(`${forcastNum}TempLow`).innerText = `/ ${Math.round(forcastData.daily.data[i].temperatureLow)}\xB0 F`
+        forcastTemp.innerText = `${Math.round(forcastData.daily.data[i].temperatureHigh)}\xB0 / ${Math.round(forcastData.daily.data[i].temperatureLow)}\xB0 F`
+
+
+        //Put components with content into correct containers for flex box
+        forcastIconContainer.appendChild(forcastIcon)
+
+        forcastTempContainer.appendChild(forcastTemp)
+
+        forcastInfoContainer.appendChild(forcastForcast)
+        forcastInfoContainer.appendChild(forcastTempContainer)
+
+        //put containers into forcast div
+        forcastDiv.appendChild(forcastHeader)
+        forcastDiv.appendChild(forcastIconContainer)
+        forcastDiv.appendChild(forcastInfoContainer)
+
+        //Append to list of forcasts
+        let forcastsContainer = document.getElementById('forcastsContainer')
+        forcastsContainer.appendChild(forcastDiv)
     }
 }

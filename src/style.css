@@ -1,4 +1,4 @@
-.title{
+h1{
     text-align: center;
     font-size: 30pt;
     font-weight: bold;
@@ -20,49 +20,36 @@
     width: 100px;
 }
 
-.forcastInfoContainer{
+/* .forcastInfoContainer{
     display: flex;
     flex-direction: column;
     gap: 20px;
     float: left;
     width: 200px;
-}
+} */
 
-.forcastTempContainer{
+/* .forcastTempContainer{
     display: flex;
     flex-direction: row;
-}
+} */
 
 .forcastItem{
     width: 300px;
     height: 150px;
 }
 
-.forcastHeader{
-    background-color: #4d90fa;
+h2{
+    background-color: #4d90fa; 
     color: #ffff;
     height: 30px;
     text-align: left;
     font-size: 20pt;
 }
 
-.forcastIcon{
-    flex-grow: 12;
-}
-
-.forcastTempHigh{
-    font-weight: bold;
+p{
     font-size: 15pt;
 }
 
-.forcastTempLow{
-    font-size: 15pt;
-}
-
-.forcastForcast{
-    font-size: 15pt;
-}
-
-.forcastIcon{
+img{
     padding-top: 20px;
 }
