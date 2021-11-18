@@ -26,7 +26,7 @@ window.addEventListener('load', fetchLocation());
 async function fetchLocation(){
     /*
     Function fetches location data for zip code given
-    NOTE: Right now this is hard coded to Provo, UT as that is where I live, but this could easily be changed to work for any zip code by
+    NOTE: Right now this is hard coded to Provo, UT, but this could easily be changed to work for any zip code by
     adding an input box on the main screen for users to input thier own zip code
     */
     try{
@@ -97,10 +97,7 @@ function getImage(img){
 
 function bodyLoaded(locationData, forcastData){
     /*
-    Function handles dynamically filling in HTML component with api data
-    NOTE: A future optimization that could be made to make this application more dynamic would be to dynamically render the forcast html components 
-    in this function for each day. That would then make it easier to display a 5 day forcast or a 4 day forcast and could even allow the user to possibly select
-    how many days they would like in the forcast.
+    Function handles dynamically creating HTML components with api data
     */
 
     //Fill header with correct name of location
